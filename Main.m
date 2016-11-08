@@ -21,13 +21,21 @@ for i=12:12
         
         Rmin = 60;
         Rmax = 120;
-        [centers_blue, radii_blu] = find_circles(J,Rmin,Rmax,0.965);
+        [centers_blue, radii_blue] = find_circles(J,Rmin,Rmax,0.965);
+        
+        center1 = centers_blue(1,:);
+        center2 = centers_blue(2,:);
+        radio1 = radii_blue(1);
+        radio2 = radii_blue(2);
+        
+        radio_chico=get_white_r(binaria, center1, radio1)
+        radio_grande=get_white_r(binaria, center2, radio2)
         
         Rmin = 120;
         Rmax = 130;
         [centers_big, radii_big] = find_circles(J,Rmin,Rmax,0.95);
         
-        viscircles(centers_blue, radii_blu,'EdgeColor','b');
+        viscircles(centers_blue, radii_blue,'EdgeColor','b');
         viscircles(centers_big, radii_big,'EdgeColor','r');
         viscircles(centers_small, radii_small,'EdgeColor','g');
     end
