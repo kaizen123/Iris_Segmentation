@@ -32,8 +32,8 @@ for i=12:12
             do_nothing = 1;
         end
         
-        radio_chico=get_white_r(binaria, center1, radio1)
-        radio_grande=get_white_r(binaria, center2, radio2)
+        radio_chico=get_white_r(binaria, center1, radio1);
+        radio_grande=get_white_r(binaria, center2, radio2);
         
         Rmin = 120;
         Rmax = 130;
