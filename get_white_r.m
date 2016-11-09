@@ -2,8 +2,8 @@ function [white_ratio] = get_white_r(imagen, centro, radio)
 % se analiza un cuadrado centrado en centro y de lado 2*radio
 centro_x = centro(2);  %% centro(2) porque columna es como eje x
 centro_y = centro(1);  %% centro(1) porque filas es como eje y
-X_length = length(imagen(1,:));
-Y_length = length(imagen(:,1));
+X_length = length(imagen(:,1));
+Y_length = length(imagen(1,:));
 
 y1 = posicion_limite(floor(centro_y-radio),Y_length);
 y2 = posicion_limite(floor(centro_y+radio),Y_length);
