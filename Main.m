@@ -1,6 +1,6 @@
 main_folder = 'RGB Images';
-for i=12:12
-    for j=2:2
+for i=10:40
+    for j=1:4
         carpeta = int2str(i);  %% AÑADIR 1 ---> 01, 79 --->79
         Nimagen = int2str(j);
         direccion = strcat('RGB Images\0',carpeta,'\IMG_0',carpeta,'_L_',Nimagen,'.JPG');
@@ -14,34 +14,24 @@ for i=12:12
         figure
         imshow(binaria)
         J=edge(binaria);
-
-        Rmin = 35;
-        Rmax = 60;
-        [centers_small, radii_small] = find_circles(J,Rmin,Rmax,0.85);
         
         Rmin = 60;
         Rmax = 120;
         [centers_blue, radii_blue] = find_circles(J,Rmin,Rmax,0.965);
         
-        try
-            center1 = centers_blue(1,:);
-            center2 = centers_blue(2,:);
-            radio1 = radii_blue(1);
-            radio2 = radii_blue(2);
-        catch
-            do_nothing = 1;
-        end
+        centros = centers_blue;
+        radios = radii_blue;
+        [iris_center, iris_radio] = compare_white_r (binaria, centros, radios);
         
-        radio_chico=get_white_r(binaria, center1, radio1);
-        radio_grande=get_white_r(binaria, center2, radio2);
         
         Rmin = 120;
         Rmax = 130;
         [centers_big, radii_big] = find_circles(J,Rmin,Rmax,0.95);
         
-        viscircles(centers_blue, radii_blue,'EdgeColor','b');
-        viscircles(centers_big, radii_big,'EdgeColor','r');
-        viscircles(centers_small, radii_small,'EdgeColor','g');
+        viscircles(centers_blue, radii_blue, 'EdgeColor','b');
+        viscircles(iris_center, iris_radio,'EdgeColor','r');
+        viscircles(centers_big, radii_big,'EdgeColor','g');
+
     end
 end
 
