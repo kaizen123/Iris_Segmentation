@@ -23,10 +23,14 @@ for i=12:12
         Rmax = 120;
         [centers_blue, radii_blue] = find_circles(J,Rmin,Rmax,0.965);
         
-        center1 = centers_blue(1,:);
-        center2 = centers_blue(2,:);
-        radio1 = radii_blue(1);
-        radio2 = radii_blue(2);
+        try
+            center1 = centers_blue(1,:);
+            center2 = centers_blue(2,:);
+            radio1 = radii_blue(1);
+            radio2 = radii_blue(2);
+        catch
+            do_nothing = 1;
+        end
         
         radio_chico=get_white_r(binaria, center1, radio1)
         radio_grande=get_white_r(binaria, center2, radio2)
