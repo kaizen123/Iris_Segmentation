@@ -1,5 +1,5 @@
 main_folder = 'RGB Images';
-for i=10:40
+for i=50:60
     for j=1:4
         carpeta = int2str(i);  %% AÑADIR 1 ---> 01, 79 --->79
         Nimagen = int2str(j);
@@ -12,7 +12,7 @@ for i=10:40
         equalizada = histeq(gray);
         binaria = imbinarize(equalizada);
         figure
-        imshow(binaria)
+        imshow(I)
         J=edge(binaria);
         
         Rmin = 60;
