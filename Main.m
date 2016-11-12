@@ -23,7 +23,7 @@ for i=36:40
             viscircles(centros, radios, 'EdgeColor','b');
             viscircles(iris_center, iris_radio,'EdgeColor','r');
         end
-        iris = just_iris(gray, iris_center, iris_radio);
+        iris = just_iris(I, iris_center, iris_radio);
         figure
         imshow(iris)
        
