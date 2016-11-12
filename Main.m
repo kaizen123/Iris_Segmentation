@@ -1,12 +1,13 @@
 main_folder = 'RGB Images';
-for i=36:40
+for i=10:15
     for j=1:4
         carpeta = int2str(i);  %% AÑADIR 1 ---> 01, 79 --->79
         Nimagen = int2str(j);
         direccion = strcat('RGB Images\0',carpeta,'\IMG_0',carpeta,'_L_',Nimagen,'.JPG');
-
-        I = imread(direccion);
-        I = imresize(I,0.2);       
+        
+        I_original = imread(direccion);
+        resize_constant = 0.2;
+        I = imresize(I_original,resize_constant);       
 
         gray = rgb2gray(I);
         equalizada = histeq(gray);
@@ -22,11 +23,13 @@ for i=36:40
             [iris_center, iris_radio] = compare_white_r (binaria, centros, radios);
             viscircles(centros, radios, 'EdgeColor','b');
             viscircles(iris_center, iris_radio,'EdgeColor','r');
+            real_iris_center = iris_center / resize_constant;
+            real_iris_radio = iris_radio / resize_constant;
+            iris = just_iris( I_original, real_iris_center, real_iris_radio);
+            figure
+            imshow(iris);   
         end
-        iris = just_iris(I, iris_center, iris_radio);
-        figure
-        imshow(iris)
-       
+
     end
 end
 
