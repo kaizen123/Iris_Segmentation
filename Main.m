@@ -1,5 +1,5 @@
 main_folder = 'RGB Images';
-for i=50:60
+for i=36:40
     for j=1:4
         carpeta = int2str(i);  %% AÑADIR 1 ---> 01, 79 --->79
         Nimagen = int2str(j);
@@ -17,21 +17,16 @@ for i=50:60
         
         Rmin = 60;
         Rmax = 120;
-        [centers_blue, radii_blue] = find_circles(J,Rmin,Rmax,0.965);
-        
-        centros = centers_blue;
-        radios = radii_blue;
-        [iris_center, iris_radio] = compare_white_r (binaria, centros, radios);
-        
-        
-        Rmin = 120;
-        Rmax = 130;
-        [centers_big, radii_big] = find_circles(J,Rmin,Rmax,0.95);
-        
-        viscircles(centers_blue, radii_blue, 'EdgeColor','b');
-        viscircles(iris_center, iris_radio,'EdgeColor','r');
-        viscircles(centers_big, radii_big,'EdgeColor','g');
-
+        [centros, radios] = find_circles(J,Rmin,Rmax,0.97);
+        if ~isempty(centros);
+            [iris_center, iris_radio] = compare_white_r (binaria, centros, radios);
+            viscircles(centros, radios, 'EdgeColor','b');
+            viscircles(iris_center, iris_radio,'EdgeColor','r');
+        end
+        iris = just_iris(gray, iris_center, iris_radio);
+        figure
+        imshow(iris)
+       
     end
 end
 
