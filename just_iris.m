@@ -1,4 +1,4 @@
-function [iris] = just_iris(image, center, radio)
+function [iris, iris_square] = just_iris(image, center, radio)
 %%% Recibe una imagen, más el centro y el radio del iris detectado para
 %%% eliminar (dejar en negro) toda parte de la imagen que no corresponde al
 %%% iris
@@ -14,6 +14,8 @@ row_1 = posicion_limite(floor(centro_rows - radio), rows);
 row_2 = posicion_limite(floor(centro_rows + radio), rows);
 col_1 = posicion_limite(floor(centro_cols - radio), cols);
 col_2 = posicion_limite(floor(centro_cols + radio), cols);
+
+iris_square = image(row_1:row_2, col_1: col_2, :);
 
 % Sectores fuera del cuadrado circunscrito
 for channel=1:3
