@@ -76,7 +76,7 @@ Gdir=ajustar(Gdir);
 %Aplicación de filtros Gabor
 
 %Parámetros del filtro
-wavelength = 20;
+wavelength = 2;
 orientation = 0;
 %Resultado en magnitud y fase
 [mag,phase] = imgaborfilt(gray,wavelength,orientation);
@@ -84,7 +84,7 @@ orientation = 0;
 mag=ajustar(mag);
 phase=ajustar(phase);
 %Aplicación de umbral sobre resultados obtenidos por Gabor
-modo=3;
+modo=2;
 inicio=0;
 fin=255;
 delta=(fin-inicio)/7; %7 saltos y 8 valores distintos
@@ -105,7 +105,6 @@ mag8=umbral(mag,umbrales(7),modo);
 phase8=umbral(phase,umbrales(7),modo);
 mag9=umbral(mag,umbrales(8),modo);
 phase9=umbral(phase,umbrales(8),modo);
-
 
 %Nuevo display de resultados
 lista1=lista(mag,mag2,mag3,mag4,mag5,mag6,mag7,mag8,mag9);
