@@ -37,7 +37,6 @@ else
     radio_out = radios(indices(1));
 end
 
-%%$ A futuro mejorar el criterio de decisión, por ejemplo, normalizar por el radio.
 end
 
 

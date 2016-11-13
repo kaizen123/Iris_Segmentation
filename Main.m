@@ -1,6 +1,6 @@
 
 main_folder = 'RGB Images';
-for i=40:42
+for i=42:50
     for j=1:4
         carpeta = int2str(i);  %% AÑADIR 1 ---> 01, 79 --->79
         Nimagen = int2str(j);
@@ -31,7 +31,7 @@ for i=40:42
             %figure
             %imshow(iris_square);   
             
-            finding_retina(iris_square, real_iris_radio);
+            centros_pupila = finding_retina(iris_square, real_iris_radio);
         end
   
     end
