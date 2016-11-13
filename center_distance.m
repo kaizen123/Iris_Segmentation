@@ -1,7 +1,7 @@
 function [distance] = center_distance (rows, cols, centros)
 N_centros = length(centros(:,1)); % Cantidad de circulos detectados 
-distance = ones(N_centros, 1);
-centro_rows_imag = rows/2;
+distance = ones(N_centros, 1);    % Arreglo para guardar las distancias al centro
+centro_rows_imag = rows/2;        % Coordenadas centro de la imagen
 centro_cols_imag = cols/2;
 
 for i=1:N_centros
