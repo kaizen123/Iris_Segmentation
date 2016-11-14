@@ -97,8 +97,8 @@ main_folder = 'RGB Images';
 %     splot(3,3,lista1) %se puede elegir entre lista 1 y 2
     
     %6)Aplicación de umbrales de intensidad para reflejos(y conjuntos de pestañas?)
-    inicio1=0;
-    fin1=255;
+    inicio1=100;
+    fin1=170;
     modo1=4;
     lista3=comparar(gray,inicio1,fin1,modo1);
     figure
