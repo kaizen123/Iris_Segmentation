@@ -1,6 +1,6 @@
 
 main_folder = 'RGB Images';
-for i=45:50
+for i=45:45
     for j=1:4
         tic;
         carpeta = int2str(i);  %% AÑADIR 1 ---> 01, 79 --->79
@@ -39,10 +39,12 @@ for i=45:50
             real_iris_center = iris_center / resize_constant;
             real_iris_radio = iris_radio / resize_constant;
             [iris, iris_square] = just_iris( I_original, real_iris_center, real_iris_radio);
-            %figure
-            %imshow(iris_square);   
+            figure
+            A = umbral(rgb2gray(iris_square),25 ,1);
+            imshow(A); 
+            figure, imshow(iris_square),
             
-            centros_pupila = finding_retina(iris_square, real_iris_radio);
+            %centros_pupila = finding_retina(iris_square, real_iris_radio);
         end
         toc;
   
