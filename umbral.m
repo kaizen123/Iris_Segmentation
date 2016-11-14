@@ -5,6 +5,8 @@
 %umbral.
 %El modo 4 lleva a negro todos los pixeles con una intensidad MAYOR al
 %umbral.
+%El modo 5 lleva a blanco todos los pixeles con una intensidad MENOR al
+%umbral.
 function out = umbral(I,treshold,modo)
     fil=length(I(:,1));
     col=length(I(1,:));
@@ -36,14 +38,23 @@ function out = umbral(I,treshold,modo)
             end
          end      
     %Modo 4
-    else
+    elseif modo==4
          for i=1:fil
             for j=1:col
                 if I(i,j)>treshold
                     I(i,j)=0;
                 end
             end
-        end         
+         end
+    %Modo 5
+    else 
+         for i=1:fil
+            for j=1:col
+                if I(i,j)<treshold
+                    I(i,j)=255;
+                end
+            end
+         end      
     end  
     out=I;
 end
