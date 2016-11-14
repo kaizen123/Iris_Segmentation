@@ -75,7 +75,7 @@ main_folder = 'RGB Images';
     %figure, imshow(Gdir);
 
 
-    %Aplicación de filtros Gabor
+    %5)Aplicación de filtros Gabor
 
     %Parámetros del filtro
     wavelength = 3.4;
@@ -93,8 +93,17 @@ main_folder = 'RGB Images';
     lista1=comparar(mag,inicio,fin,modo);
     lista2=comparar(phase,inicio,fin,modo);
     %Compara imagen original y otras 8 a las cuales se les aplicò un umbral.
+%     figure
+%     splot(3,3,lista1) %se puede elegir entre lista 1 y 2
+    
+    %6)Aplicación de umbrales de intensidad para reflejos(y conjuntos de pestañas?)
+    inicio1=0;
+    fin1=255;
+    modo1=4;
+    lista3=comparar(gray,inicio1,fin1,modo1);
     figure
-    splot(3,3,lista1) %se puede elegir entre lista 1 y 2
+    splot(3,3,lista3)
+    
 %     pause
 %    end
 %end
