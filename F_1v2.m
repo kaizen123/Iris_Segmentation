@@ -145,18 +145,24 @@ main_folder = 'RGB Images';
 %     figure
 %     splot(3,3,rbin)
     b1=imbinarize(rbin{5});
-    figure
-    imshow(b1)
+%     figure
+%     imshow(b1)
 %     figure
 %     imshow(binaria)
 %     e2=edge(b1,'canny');
 %     figure
 %     imshow(e2)    
-    figure
-    imshow(Gy)
+%     figure
+%     imshow(Gy)
+%     b2=imbinarize(Gy);
+%     figure
+%     imshow(b2)
     neg=negativo(b1);
-    figure
-    imshow(neg)
+%     figure
+%     imshow(neg)
+%     test=entornoblanco(b1);
+%     figure
+%     imshow(test)
     %Pasa bajos no es util
 %     filterb=[1 1 1;1 1 1;1 1 1];
 %     resultado3=filter2(filterb,Gx,'same');
