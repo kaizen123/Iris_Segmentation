@@ -154,11 +154,15 @@ main_folder = 'RGB Images';
 %     imshow(e2)    
     figure
     imshow(Gy)
-    filterb=[1 1 1;1 1 1;1 1 1];
-    resultado3=filter2(filterb,Gx,'same');
-%     resultado3=ajustar(resultado3);
+    neg=negativo(b1);
     figure
-    imshow(resultado3)
+    imshow(neg)
+    %Pasa bajos no es util
+%     filterb=[1 1 1;1 1 1;1 1 1];
+%     resultado3=filter2(filterb,Gx,'same');
+%     resultado3=ajustar(resultado3);
+%     figure
+%     imshow(resultado3)
 %     pause
 %    end
 %end
