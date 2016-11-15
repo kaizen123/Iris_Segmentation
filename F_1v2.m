@@ -5,11 +5,11 @@ main_folder = 'RGB Images';
 %pegado, por lo que lo recomendable es dejarlo comentado e iterar sobre un
 %número pequeño de imagenes (para no tener muchas figuras)
 
-%for i=47:50
-%    for j=1:2
+%for i=10:20
+   %for j=1:1
     %Aquí se puede elegir la imagen en caso de no querer iterar. Claramente se deben comentar además los 2 for (i,j)    
-    i=74;
-    j=2;
+    %i=74;
+    % j=2;
     %Identificar imagen actual en consola
     %i
     %j
@@ -19,8 +19,9 @@ main_folder = 'RGB Images';
     Nimagen = int2str(j);
     direccion = strcat('RGB Images\0',carpeta,'\IMG_0',carpeta,'_R_',Nimagen,'.JPG');
     %Reescalamiento de imagen
-    I_original = imread(direccion);
-    resize_constant = 0.2;
+    %I_original = imread(direccion);
+    I_original = imread('recortada.png');
+    resize_constant = 1;
     I = imresize(I_original,resize_constant);
     
     % 2)Nuevas imagenes a partir de la original + dimensiones
@@ -80,7 +81,7 @@ main_folder = 'RGB Images';
     %5)Aplicación de filtros Gabor
 
     %Parámetros del filtro
-    wavelength = 3.4;
+    wavelength = 3.2;
     orientation = 0;
     %Resultado en magnitud y fase
     [mag,phase] = imgaborfilt(gray,wavelength,orientation);
@@ -99,12 +100,13 @@ main_folder = 'RGB Images';
 %     splot(3,3,lista1) %se puede elegir entre lista 1 y 2
     
     %6)Aplicación de umbrales de intensidad para reflejos->modo 4(y conjuntos de pestañas?->modo 5)
-    inicio1=50;
-    fin1=150;
-    modo1=4;
+    inicio1=0;
+    fin1=50;
+    modo1=5;
     lista3=comparar(gray,inicio1,fin1,modo1);
-%     figure
-%     splot(3,3,lista3)
+    convertir(I,lista3{8})        
+    figure
+    splot(3,3,lista3)
 
     %7)Detección de párpados
 %     figure
@@ -157,7 +159,7 @@ main_folder = 'RGB Images';
 %     b2=imbinarize(Gy);
 %     figure
 %     imshow(b2)
-    neg=negativo(b1);
+%     neg=negativo(b1);
 %     figure
 %     imshow(neg)
 %     test=entornoblanco(b1);
@@ -170,7 +172,7 @@ main_folder = 'RGB Images';
 %     figure
 %     imshow(resultado3)
 %     pause
-%    end
+%   end
 %end
 
 
