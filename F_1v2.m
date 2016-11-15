@@ -66,8 +66,10 @@ main_folder = 'RGB Images';
     [Gx, Gy] = imgradientxy(gray);
     [Gmag, Gdir] = imgradient(Gx, Gy);
     %Ajuste de resultados para que se puedan visualizar
+%     Gx=ajustar(Gx);
+%     Gy=ajustar(Gy);
     Gmag=ajustar(Gmag);
-    %Gdir=ajustar(Gdir);
+    Gdir=ajustar(Gdir);
     %// Display images
     figure, imshow(gray);    
     %figure, imshow(I);
@@ -88,7 +90,7 @@ main_folder = 'RGB Images';
     %Aplicación de umbral sobre resultados obtenidos por Gabor
     modo=2;
     inicio=0;
-    fin=255;   
+    fin=200;   
     %Nuevo display de resultados: lista1 para magnitud y lista 2 para fase   
     lista1=comparar(mag,inicio,fin,modo);
     lista2=comparar(phase,inicio,fin,modo);
@@ -96,14 +98,67 @@ main_folder = 'RGB Images';
 %     figure
 %     splot(3,3,lista1) %se puede elegir entre lista 1 y 2
     
-    %6)Aplicación de umbrales de intensidad para reflejos(y conjuntos de pestañas?)
-    inicio1=100;
-    fin1=170;
+    %6)Aplicación de umbrales de intensidad para reflejos->modo 4(y conjuntos de pestañas?->modo 5)
+    inicio1=50;
+    fin1=150;
     modo1=4;
     lista3=comparar(gray,inicio1,fin1,modo1);
+%     figure
+%     splot(3,3,lista3)
+
+    %7)Detección de párpados
+%     figure
+%     imshow(Gy)
+%     figure
+%     imshow(Gx)
+%     figure
+%     imshow(Gmag)
+%     figure
+%     imshow(Gdir)
+%     figure
+%     imshow(gray)
+%     e1=edge(gray,'zerocross');
+%     figure
+%     imshow(e1)
+%     [Gx2, Gy2] = imgradientxy(Gmag);
+%     [Gmag2, Gdir2] = imgradient(Gx2, Gy2);
+%     %Ajuste de resultados para que se puedan visualizar    
+%     Gmag2=ajustar(Gmag2);
+%     Gdir2=ajustar(Gdir2);
+    inicio2=0;
+    fin2=50;
+    modo2=5;
+    lista4=comparar(Gdir,inicio2,fin2,modo2);
+%     figure
+%     splot(3,3,lista4)
+% Pasa altos a gray
+    filterx=[1 1 1]; 
+    filtery=[-5;0;-5];
+    filter=filtery*filterx;
+    resultado=filter2(filter,Gdir,'same');
+    resultado=ajustar(resultado);
+    resultado2=filter2(filter,resultado,'same');
+    resultado2=ajustar(resultado2);    
+%     figure
+%     imshow(resultado)
+    rbin=comparar(resultado,100,200,5)
+%     figure
+%     splot(3,3,rbin)
+    b1=imbinarize(rbin{5});
     figure
-    splot(3,3,lista3)
-    
+    imshow(b1)
+%     figure
+%     imshow(binaria)
+%     e2=edge(b1,'canny');
+%     figure
+%     imshow(e2)    
+    figure
+    imshow(Gy)
+    filterb=[1 1 1;1 1 1;1 1 1];
+    resultado3=filter2(filterb,Gx,'same');
+%     resultado3=ajustar(resultado3);
+    figure
+    imshow(resultado3)
 %     pause
 %    end
 %end
