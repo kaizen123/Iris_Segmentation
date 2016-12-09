@@ -8,7 +8,6 @@ function y = lectura(i,j,lado,resize_constant)
     direccion = strcat('RGB Images\0',carpeta,'\IMG_0',carpeta,'_',lado,'_',Nimagen,'.JPG');
     %Reescalamiento de imagen
     I_original = imread(direccion);
-    resize_constant = 1;
     I = imresize(I_original,resize_constant);
     y = I;
 end
