@@ -1,13 +1,6 @@
-function [real_iris_center, real_iris_radio] = datos_iris()
-    main_folder = 'RGB Images';
-    for i=45:45
-        for j=4:4
-            tic;
-            carpeta = int2str(i);  %% AÑADIR 1 ---> 01, 79 --->79
-            Nimagen = int2str(j);
-            direccion = strcat('RGB Images\0',carpeta,'\IMG_0',carpeta,'_L_',Nimagen,'.JPG');
-            %direccion = strcat('Infrared Images\0',carpeta,'\0',carpeta,'_L','\Img_0',carpeta,'_L_',Nimagen,'.bmp');
-            I_original = imread(direccion);  
+function [real_iris_center, real_iris_radio] = datos_iris(imagen)
+  
+            I_original = imagen
 
             % Resizeando (vest verbo) para detección óptima
             resize_constant = 0.15; 
@@ -48,6 +41,5 @@ function [real_iris_center, real_iris_radio] = datos_iris()
             end
             toc;
 
-        end
-    end
+    
 end
