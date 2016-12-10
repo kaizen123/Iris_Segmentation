@@ -1,4 +1,4 @@
-function [imagen] = sin_reflejos(image, resize, morfo)
+function [out] = sin_reflejos(image, resize, morfo)
 
 reflex = imresize(image,resize);        %% Se achica la imagen
 gary = rgb2gray(reflex);                %% Transformacion a escala e grises
