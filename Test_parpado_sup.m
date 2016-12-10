@@ -5,7 +5,7 @@ tic
 i = 40; %Imagen 1 = 16,2. %Imagen 2 = 40,2 , %Angulos de -30 a 50 y 130 a 220. Factores de radios = 1.1 y 1.4
 j = 2;
 lado = 'L';
-Ioriginal=lectura(i,j,lado,1);
+I_original=lectura(i,j,lado,1);
 resize = 0.2;
 I = lectura(i,j,lado,resize);
 row=length(I(:,1,1));
@@ -18,7 +18,7 @@ cx=centro2(1);
 cy=centro2(2);
 radio2=radio*resize;
 figure
-imshow(Ioriginal)
+imshow(I_original)
 viscircles(centro, radio, 'EdgeColor','b');
 imshow(I)
 viscircles(centro2, radio2, 'EdgeColor','b');
@@ -140,6 +140,17 @@ RGB4 = insertShape(RGB3,'Line',[cx_izq cy_izq cx_der cy_der],'LineWidth',2,'Colo
 imshow(RGB4)
 %--------------------------------------------------------------------------------------------------------------------------------------------------------
 %Búsqueda del tercer punto
+%Parte preliminar: intersectar pupila con recta anterior
+[iris, iris_square] = just_iris( I_original, centro, radio);
+%figure, imshow(iris_square),
+[centro_pupila, radio_pupila] = finding_retina(iris_square, radio);
+pupila_real_center = centro_real(centro, radio, centro_pupila);
+cx_pup = pupila_real_center(1)*resize;
+cy_pup = pupila_real_center(2)*resize;
+r_pup = radio_pupila*resize;
+RGB5 = insertShape(RGB4,'Circle',[cx_pup cy_pup r_pup],'LineWidth',2,'Color','yellow');
+imshow(RGB5)
+%Version original
 recta = zeros(1,length(coefs));
 gray=rgb2gray(I);
 for i=1:length(coefs)
@@ -148,8 +159,8 @@ end
 [maximo3 ind3] = min(recta);
 cx_cen = x_v(ind3);
 cy_cen = y_v(ind3);
-RGB5 = insertShape(RGB4,'FilledCircle',[cx_cen cy_cen 5],'LineWidth',2,'Color','yellow');
-imshow(RGB5)
+RGB6 = insertShape(RGB5,'FilledCircle',[cx_cen cy_cen 5],'LineWidth',2,'Color','yellow');
+imshow(RGB6)
 %--------------------------------------------------------------------------------------------------------------------------------------------------------
 %Cálculo de coeficientes de parábola resultante que ajusta los 3 puntos
 M = [cx_izq^2 cx_izq 1 ; cx_cen^2 cx_cen 1 ; cx_der^2 cx_der 1];
@@ -168,10 +179,10 @@ blue = [0,0,255];
 
 for i=1:length(x_aju)
     y_aju(i) = floor(A(1)*x_aju(i)^2+A(2)*x_aju(i)+A(3));
-    RGB5(y_aju(i),x_aju(i),:) = blue;       
+    RGB6(y_aju(i),x_aju(i),:) = blue;       
 end 
 figure
-imshow(RGB5)
+imshow(RGB6)
     
 
 
