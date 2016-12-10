@@ -1,5 +1,5 @@
 function y = rectangulos(I2,x_esc,y_esc,x_par,y_par,W,H)
-    b=1;
+    b=2;
     verde = [0,255,0];
     verdeW = zeros(1,W,3);
     verdeH = zeros(H,1,3);
