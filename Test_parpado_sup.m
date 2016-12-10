@@ -114,6 +114,7 @@ RGB = insertShape(RGB,'FilledCircle',[cx_izq cy_izq 5],'LineWidth',2,'Color','ye
 figure
 imshow(RGB)
 toc
+u=1;
 % viscircles(centro2, 5, 'EdgeColor','b');
 
 
