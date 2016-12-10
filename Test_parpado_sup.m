@@ -1,7 +1,7 @@
 %Script de testeo para algoritmo que permita detectar párpado superior (basado en método de Minkowski/tesis de Daniel Contreras)
 %-----------------------------------------------------------------------------------------------------------------------------------------------------
 %LECTURA IMAGEN
-i = 16;
+i = 40; %Imagen 1 = 16,2. %Imagen 2 = 40,2 , %Angulos de -30 a 50 y 130 a 220. Factores de radios = 1.1 y 1.4
 j = 2;
 lado = 'L';
 Ioriginal=lectura(i,j,lado,1);
@@ -30,13 +30,22 @@ H = floor(0.1*radio2);
 %Iteración sobre ángulos desde -30 a 45 grados-> total de 75 grados.
 pause(5)
 delta = 1;
-angulos = -40:delta:50;
-factores=zeros(1,length(angulos));
+angulosder = -40:delta:50;
+angulosizq = 130:delta:220;
+angulos = horzcat(angulosder,angulosizq);
+% angulos = -40:delta:50;
+%angulos = 130:delta:220;
+%factores=zeros(1,length(angulos));
+factores_der = zeros(1,length(angulosder));
+factores_izq = zeros(1,length(angulosizq));
+d1 = radio2*(1.1);
+d2 = radio2*(1.4);
+I2 = I;
+I3 = I;
+%figure
 for k = 1:length(angulos)
     rad = angulos(k)*pi/180;
-    %Definición de la posición de rectángulos de detección
-    d1 = radio2*(1.1);
-    d2 = radio2*(1.3);
+    %Definición de la posición de rectángulos de detección    
     x_esc = floor(cx + d1*cos(rad)); 
     y_esc = floor(cy - d1*sin(rad));
     x_par = floor(cx + d2*cos(rad)); 
@@ -61,35 +70,52 @@ for k = 1:length(angulos)
         g3 = 1;
     end
     %Multiplicación de factores y almacenamiento en vector
-    factores(k)=g1*g2*g3;
+    if k <= length(angulosder)
+        factores_der(k) = g1*g2*g3;
+    else
+        factores_izq(k-length(angulosder)) = g1*g2*g3;
+    end       
+    %factores(k)=g1*g2*g3;
     %Visualización de rectángulos utilizados para ajuste de parámetros
-    I2 = I;
-    verde = [0,255,0];
-    verdeW = zeros(1,W,3);
-    verdeH = zeros(H,1,3);
-    rojo = [255,0,0];
-    rojoW = zeros(1,W,3);
-    rojoH = zeros(H,1,3);
-    for i=1:H
-        verdeH(i,1,:)=verde;
-        rojoH(i,1,:)=rojo;
-    end 
-    for j=1:W
-        verdeW(1,j,:) = verde;
-        rojoW(1,j,:) = rojo;
-    end    
-    I2(y_esc:y_esc+(H-1),x_esc,1:3) = verdeH;
-    I2(y_esc:y_esc+(H-1),x_esc+W-1,1:3) = verdeH;
-    I2(y_esc,x_esc:x_esc+W-1,1:3) = verdeW;
-    I2(y_esc+(H-1),x_esc:x_esc+W-1,1:3) = verdeW;
-    I2(y_par:y_par+(H-1),x_par,1:3) = rojoH;
-    I2(y_par:y_par+(H-1),x_par+W-1,1:3) = rojoH;
-    I2(y_par,x_par:x_par+W-1,1:3) = rojoW;
-    I2(y_par+(H-1),x_par:x_par+W-1,1:3) = rojoW;
-    imshow(I2)    
+    I2=I;
+    I2=rectangulos(I2,x_esc,y_esc,x_par,y_par,W,H);
+    I3=rectangulos(I3,x_esc,y_esc,x_par,y_par,W,H);    
+    %imshow(I2)    
 end
+figure
+imshow(I3)
 %-----------------------------------------------------------------------------------------------------------------------------------------------------
-%Búsqueda del máximo en vector de factores y cálculo de la posición de
+%Búsqueda de máximo de g y posiciones de los puntos c_izq y c_der.
+
+[maximo1 ind1] = max(factores_der);
+[maximo2 ind2] = max(factores_izq);
+rad1 = angulosder(ind1)*pi/180;
+rad2 = angulosizq(ind2)*pi/180;
+%Definición de la posición de rectángulos de detección
+xd_esc = floor(cx + d1*cos(rad1));
+yd_esc = floor(cy - d1*sin(rad1));
+xd_par = floor(cx + d2*cos(rad1));
+yd_par = floor(cy - d2*sin(rad1));
+cx_der = (xd_esc + xd_par)/2;
+cy_der = (yd_esc + yd_par)/2;
+c_der(1) = cx_der;
+c_der(2) = cy_der;
+xi_esc = floor(cx + d1*cos(rad2));
+yi_esc = floor(cy - d1*sin(rad2));
+xi_par = floor(cx + d2*cos(rad2));
+yi_par = floor(cy - d2*sin(rad2));
+cx_izq = (xi_esc + xi_par)/2;
+cy_izq = (yi_esc + yi_par)/2;
+c_izq(1) = cx_izq;
+c_izq(2) = cy_izq;
+RGB = insertShape(I,'FilledCircle',[cx_der cy_der 5],'LineWidth',2,'Color','yellow');
+RGB = insertShape(RGB,'FilledCircle',[cx_izq cy_izq 5],'LineWidth',2,'Color','yellow');
+
+figure
+imshow(RGB)
+% viscircles(centro2, 5, 'EdgeColor','b');
+
+
 
 
 
