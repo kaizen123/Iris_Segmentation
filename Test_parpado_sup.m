@@ -161,7 +161,17 @@ else
     disp('k')
 end
 %--------------------------------------------------------------------------------------------------------------------------------------------------------
+%Cálculo de puntos pertenecientes a la parábola descrita
+x_aju = cx_izq:1:cx_der;
+y_aju = zeros(1,length(x_aju));
+blue = [0,0,255];
 
+for i=1:length(x_aju)
+    y_aju(i) = floor(A(1)*x_aju(i)^2+A(2)*x_aju(i)+A(3));
+    RGB5(y_aju(i),x_aju(i),:) = blue;       
+end 
+figure
+imshow(RGB5)
     
 
 
