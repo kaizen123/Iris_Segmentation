@@ -150,7 +150,19 @@ cx_cen = x_v(ind3);
 cy_cen = y_v(ind3);
 RGB5 = insertShape(RGB4,'FilledCircle',[cx_cen cy_cen 5],'LineWidth',2,'Color','yellow');
 imshow(RGB5)
+%--------------------------------------------------------------------------------------------------------------------------------------------------------
+%Cálculo de coeficientes de parábola resultante que ajusta los 3 puntos
+M = [cx_izq^2 cx_izq 1 ; cx_cen^2 cx_cen 1 ; cx_der^2 cx_der 1];
+B = [cy_izq ; cy_cen ; cy_der];
+A = M^(-1)*B;
+if A(1)<0 || A(2)<-5 || A(2)>0
+    disp('Parábola no válida')
+else
+    disp('k')
+end
+%--------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    
 
 
 
