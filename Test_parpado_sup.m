@@ -114,7 +114,7 @@ RGB = insertShape(RGB,'FilledCircle',[cx_izq cy_izq 5],'LineWidth',2,'Color','ye
 figure
 imshow(RGB)
 toc
-u=2;
+u=3;
 % viscircles(centro2, 5, 'EdgeColor','b');
 %-------------------------------------------------------------------------------------------------------------------------------------------------------
 %Cálculo de pendientes y trazado de rectas
@@ -150,7 +150,29 @@ cx_cen = x_v(ind3);
 cy_cen = y_v(ind3);
 RGB5 = insertShape(RGB4,'FilledCircle',[cx_cen cy_cen 5],'LineWidth',2,'Color','yellow');
 imshow(RGB5)
+%--------------------------------------------------------------------------------------------------------------------------------------------------------
+%Cálculo de coeficientes de parábola resultante que ajusta los 3 puntos
+M = [cx_izq^2 cx_izq 1 ; cx_cen^2 cx_cen 1 ; cx_der^2 cx_der 1];
+B = [cy_izq ; cy_cen ; cy_der];
+A = M^(-1)*B;
+if A(1)<0 || A(2)<-5 || A(2)>0
+    disp('Parábola no válida')
+else
+    disp('k')
+end
+%--------------------------------------------------------------------------------------------------------------------------------------------------------
+%Cálculo de puntos pertenecientes a la parábola descrita
+x_aju = cx_izq:1:cx_der;
+y_aju = zeros(1,length(x_aju));
+blue = [0,0,255];
 
+for i=1:length(x_aju)
+    y_aju(i) = floor(A(1)*x_aju(i)^2+A(2)*x_aju(i)+A(3));
+    RGB5(y_aju(i),x_aju(i),:) = blue;       
+end 
+figure
+imshow(RGB5)
+    
 
 
 
