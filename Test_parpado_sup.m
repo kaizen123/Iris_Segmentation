@@ -1,6 +1,7 @@
 %Script de testeo para algoritmo que permita detectar párpado superior (basado en método de Minkowski/tesis de Daniel Contreras)
 %-----------------------------------------------------------------------------------------------------------------------------------------------------
 %LECTURA IMAGEN
+tic
 i = 40; %Imagen 1 = 16,2. %Imagen 2 = 40,2 , %Angulos de -30 a 50 y 130 a 220. Factores de radios = 1.1 y 1.4
 j = 2;
 lado = 'L';
@@ -110,9 +111,9 @@ c_izq(1) = cx_izq;
 c_izq(2) = cy_izq;
 RGB = insertShape(I,'FilledCircle',[cx_der cy_der 5],'LineWidth',2,'Color','yellow');
 RGB = insertShape(RGB,'FilledCircle',[cx_izq cy_izq 5],'LineWidth',2,'Color','yellow');
-
 figure
 imshow(RGB)
+toc
 % viscircles(centro2, 5, 'EdgeColor','b');
 
 
