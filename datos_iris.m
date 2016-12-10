@@ -1,11 +1,8 @@
-function [real_iris_center, real_iris_radio] = datos_iris(imagen)
-  
-            I_original = imagen
-
-            % Resizeando (vest verbo) para detección óptima
-            resize_constant = 0.15; 
-            I = imresize(I_original,resize_constant); 
-
+function [real_iris_center, real_iris_radio] = datos_iris(imagen,resize)
+                        
+            I = imagen;
+            resize_constant=resize;
+            
             % Preprocesamiento de imagen
             gray = rgb2gray(I);
             %gray = I;  %% Para infrarojas
@@ -39,7 +36,7 @@ function [real_iris_center, real_iris_radio] = datos_iris(imagen)
 
                 %centros_pupila = finding_retina(iris_square, real_iris_radio);
             end
-            toc;
+            %toc;
 
     
 end
