@@ -30,7 +30,7 @@ for j=11:11
         %viscircles(iris_center, iris_radio,'EdgeColor','r');
 
         % Reescalamiento para extraer iris con imagen de la resolución original
-        real_iris_center = iris_center / resize_constant;
+        real_iris_center = iris_center / resize_constant
         real_iris_radio = iris_radio / resize_constant;
         % Mostrar Iris en imagen original
         %figure, imshow(I_original)
@@ -41,8 +41,9 @@ for j=11:11
         %figure, imshow(iris_square),
 
         % 
-        [centros_pupila, radio_pupila] = finding_retina(iris_square, real_iris_radio);
-
+        [centro_pupila, radio_pupila] = finding_retina(iris_square, real_iris_radio);
+        
+        pupila_real_center = centro_real(real_iris_center, real_iris_radio, centro_pupila);
         % Rellenado de la imagen
         %no_reflex = sin_reflejos(iris_square, 0.5, 7);
         

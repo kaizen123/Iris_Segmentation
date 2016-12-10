@@ -1,4 +1,4 @@
-function [centros_pupila, radio_real] = finding_retina(imagen, iris_radio)
+function [centro_real, radio_real] = finding_retina(imagen, iris_radio)
     resize_constant = 0.3;
     I = imresize(imagen,resize_constant);
     
