@@ -2,7 +2,7 @@ pc_folder = 'Nico';
 carpeta = 'Iris_Segmentation';
 directions = direcciones('Nico', 'Iris_Segmentation');
 
-for j=11:11
+for j=800:800
     I_original = lectura_2(directions, j, 1);
 
     % Resizeando (vest verbo) para detección óptima
@@ -30,7 +30,7 @@ for j=11:11
         %viscircles(iris_center, iris_radio,'EdgeColor','r');
 
         % Reescalamiento para extraer iris con imagen de la resolución original
-        real_iris_center = iris_center / resize_constant
+        real_iris_center = iris_center / resize_constant;
         real_iris_radio = iris_radio / resize_constant;
         % Mostrar Iris en imagen original
         %figure, imshow(I_original)
@@ -40,10 +40,27 @@ for j=11:11
         [iris, iris_square] = just_iris( I_original, real_iris_center, real_iris_radio);
         %figure, imshow(iris_square),
 
-        % 
-        [centro_pupila, radio_pupila] = finding_retina(iris_square, real_iris_radio);
+        % Búsqueda de pupila 
+        %[centro_pupila, radio_pupila] = finding_retina(iris_square, real_iris_radio);
+        %pupila_real_center = centro_real(real_iris_center, real_iris_radio, centro_pupila);
         
-        pupila_real_center = centro_real(real_iris_center, real_iris_radio, centro_pupila);
+        for i=1:1
+            wavelength = 2+((i-1)*0.25);
+            wavelength = 2.7;
+            gabor_mask = gabor_filtering(iris_square, wavelength);
+
+            SE = strel('disk',2);               %% Operador para dilatar y cerrar blobs
+            BW2 = imdilate(gabor_mask,SE);       %% Dilatacion de blobs
+            closeBW = imclose(BW2,SE);              %% Mezcla de blobs cercanos
+            figure(), imshow(closeBW);
+
+            no_eyelashes = fill_in(closeBW, iris_square);
+            figure(), imshowpair(iris_square,no_eyelashes,'montage');
+
+        end
+
+        
+
         % Rellenado de la imagen
         %no_reflex = sin_reflejos(iris_square, 0.5, 7);
         

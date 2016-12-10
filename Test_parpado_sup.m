@@ -1,15 +1,20 @@
 %Script de testeo para algoritmo que permita detectar párpado superior (basado en método de Minkowski/tesis de Daniel Contreras)
 %-----------------------------------------------------------------------------------------------------------------------------------------------------
 %LECTURA IMAGEN
+
+pc_folder = 'Nico';
+carpeta = 'Iris_Segmentation';
+directions = direcciones(pc_folder, carpeta);
+
 tic
-i = 40; %Imagen 1 = 16,2. %Imagen 2 = 40,2 , %Angulos de -30 a 50 y 130 a 220. Factores de radios = 1.1 y 1.4
-j = 2;
-lado = 'L';
-I_original=lectura(i,j,lado,1);
+
 resize = 0.2;
-I = lectura(i,j,lado,resize);
+cancer = 255;
+I = lectura_2(directions, cancer, resize);
+I_original = lectura_2(directions, cancer, 1);
 row=length(I(:,1,1));
 col=length(I(1,:,1));
+
 %-----------------------------------------------------------------------------------------------------------------------------------------------------
 %Obtención de datos sobre posición y radio del iris detectado
 [centro radio] = datos_iris(I,resize);
@@ -31,8 +36,8 @@ H = floor(0.1*radio2);
 %Iteración sobre ángulos desde -30 a 45 grados-> total de 75 grados.
 pause(5)
 delta = 1;
-angulosder = -40:delta:50;
-angulosizq = 130:delta:220;
+angulosder = -20:delta:45;
+angulosizq = 135:delta:200;
 angulos = horzcat(angulosder,angulosizq);
 % angulos = -40:delta:50;
 %angulos = 130:delta:220;

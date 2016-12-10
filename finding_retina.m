@@ -10,7 +10,7 @@ function [centro_real, radio_real] = finding_retina(imagen, iris_radio)
     %equalizada = histeq(gray);
     %binaria = imbinarize(gray);
     J=edge(gray, 'Canny', 0.05);
-    figure(), imshow(J)
+    %figure(), imshow(J)
     
     % Longitudes de filas y columnas serán necesarias mas adelante
     rows = length(gray(:,1));
@@ -27,17 +27,17 @@ function [centro_real, radio_real] = finding_retina(imagen, iris_radio)
         [centro_out , radio_out] = best_pupila(rows, cols, centros_pupila, radios_pupila);
         
         % Bloque para evaluar funcionamiento del detector de pupilas
-        figure
-        imshow(gray)
-        viscircles(centros_pupila, radios_pupila, 'EdgeColor','g');
-        viscircles(centro_out, radio_out, 'EdgeColor','r');
+        %figure
+        %imshow(gray)
+        %viscircles(centros_pupila, radios_pupila, 'EdgeColor','g');
+        %viscircles(centro_out, radio_out, 'EdgeColor','r');
         
         % Bloque para mostrar resultado definitivo
         centro_real = centro_out/resize_constant;
         radio_real = radio_out/resize_constant;
         solo_iris = just_iris_2(imagen, centro_real, radio_real);
         figure 
-        imshow(solo_iris)
+        %imshow(solo_iris)
         %viscircles(centro_real, radio_real, 'EdgeColor','r');
        
     end
