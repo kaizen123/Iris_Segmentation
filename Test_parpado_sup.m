@@ -116,6 +116,41 @@ imshow(RGB)
 toc
 u=2;
 % viscircles(centro2, 5, 'EdgeColor','b');
+%-------------------------------------------------------------------------------------------------------------------------------------------------------
+%Cálculo de pendientes y trazado de rectas
+m1 = -(cy_der-cy_izq)/(cx_der-cy_izq);
+m2 = -1/m1;
+angulo = atan(m2);
+coefs = 0:0.01:1.2;
+%I4=I;
+white = [255,255,255];
+RGB2 = insertShape(RGB,'FilledCircle',[cx cy 5],'LineWidth',2,'Color','yellow');
+imshow(RGB2)
+x_v = zeros(1,length(coefs));
+y_v = zeros(1,length(coefs));
+for i = 1:length(coefs)
+    xp = floor(cx+radio2*coefs(i)*cos(angulo));
+    yp = floor(cy-radio2*coefs(i)*sin(angulo));
+    x_v(i)=xp;
+    y_v(i)=yp;
+end   
+RGB3 = insertShape(RGB2,'Line',[x_v(1) y_v(1) x_v(length(coefs)) y_v(length(coefs)) ],'LineWidth',2,'Color','yellow');
+imshow(RGB3)
+RGB4 = insertShape(RGB3,'Line',[cx_izq cy_izq cx_der cy_der],'LineWidth',2,'Color','yellow');
+imshow(RGB4)
+%--------------------------------------------------------------------------------------------------------------------------------------------------------
+%Búsqueda del tercer punto
+recta = zeros(1,length(coefs));
+gray=rgb2gray(I);
+for i=1:length(coefs)
+    recta(1,i) = I(y_v(i),x_v(i));    
+end
+[maximo3 ind3] = min(recta);
+cx_cen = x_v(ind3);
+cy_cen = y_v(ind3);
+RGB5 = insertShape(RGB4,'FilledCircle',[cx_cen cy_cen 5],'LineWidth',2,'Color','yellow');
+imshow(RGB5)
+
 
 
 
