@@ -148,19 +148,29 @@ pupila_real_center = centro_real(centro, radio, centro_pupila);
 cx_pup = pupila_real_center(1)*resize;
 cy_pup = pupila_real_center(2)*resize;
 r_pup = radio_pupila*resize;
-RGB5 = insertShape(RGB4,'Circle',[cx_pup cy_pup r_pup],'LineWidth',2,'Color','yellow');
+RGB5 = insertShape(RGB4,'Circle',[cx_pup cy_pup r_pup],'LineWidth',2,'Color','blue');
 imshow(RGB5)
 %Version original
 recta = zeros(1,length(coefs));
+recta3d = zeros(length(coefs),3);
 gray=rgb2gray(I);
+blue = [0,0,255];
 for i=1:length(coefs)
-    recta(1,i) = I(y_v(i),x_v(i));    
+    recta(1,i) = gray(y_v(i),x_v(i)); 
+    recta3d(i,:) = RGB5(y_v(i),x_v(i),:);
+    if recta3d(i,:)==blue
+        f_pup=i;
+    end   
 end
-[maximo3 ind3] = min(recta);
-cx_cen = x_v(ind3);
-cy_cen = y_v(ind3);
-RGB6 = insertShape(RGB5,'FilledCircle',[cx_cen cy_cen 5],'LineWidth',2,'Color','yellow');
+RGB6 = insertShape(RGB5,'Line',[x_v(f_pup) y_v(f_pup) x_v(length(coefs)) y_v(length(coefs)) ],'LineWidth',2,'Color','red');
 imshow(RGB6)
+coef_inicial = coefs(f_pup);
+recta_cortada = recta(coef_inicial:end);
+[maximo3 ind3] = min(recta_cortada);
+cx_cen = x_v(ind3+f_pup);
+cy_cen = y_v(ind3+f_pup);
+RGB7 = insertShape(RGB6,'FilledCircle',[cx_cen cy_cen 5],'LineWidth',2,'Color','yellow');
+imshow(RGB7)
 %--------------------------------------------------------------------------------------------------------------------------------------------------------
 %Cálculo de coeficientes de parábola resultante que ajusta los 3 puntos
 M = [cx_izq^2 cx_izq 1 ; cx_cen^2 cx_cen 1 ; cx_der^2 cx_der 1];
@@ -179,10 +189,10 @@ blue = [0,0,255];
 
 for i=1:length(x_aju)
     y_aju(i) = floor(A(1)*x_aju(i)^2+A(2)*x_aju(i)+A(3));
-    RGB6(y_aju(i),x_aju(i),:) = blue;       
+    RGB7(y_aju(i),x_aju(i),:) = blue;       
 end 
 figure
-imshow(RGB6)
+imshow(RGB7)
     
 
 
