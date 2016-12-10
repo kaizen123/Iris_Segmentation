@@ -14,4 +14,5 @@ for i=1:row
 end
 figure
 imshow(image)
+a=2;
 end
