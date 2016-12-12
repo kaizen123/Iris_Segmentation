@@ -9,7 +9,7 @@ function [y] = umbral_adaptivo(imagen)
     nmax = floor(row*col/10);
     max = vector(1:nmax);
     Imax = mean(max);
-    umbral_num = (Iprom+P*(Imax-Iprom))*factor
+    umbral_num = (Iprom+P*(Imax-Iprom))*factor;
     salida1 = im2bw(imagen,umbral_num/255);
     salida = umbral(imagen,umbral_num, 1);
     
