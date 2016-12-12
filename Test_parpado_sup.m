@@ -2,16 +2,14 @@
 %-----------------------------------------------------------------------------------------------------------------------------------------------------
 %LECTURA IMAGEN
 
-pc_folder = 'Nico';
+pc_folder = 'Koky';
 carpeta = 'Iris_Segmentation';
 directions = direcciones(pc_folder, carpeta);
 
 
-for iteration=100:300
+for iteration=108:108
 rect = 0;
-
 tic
-
 resize = 0.5;
 cancer = iteration;
 I = lectura_2(directions, cancer, resize);
@@ -131,14 +129,18 @@ RGB = insertShape(I,'FilledCircle',[cx_der cy_der 5],'LineWidth',2,'Color','yell
 RGB = insertShape(RGB,'FilledCircle',[cx_izq cy_izq 5],'LineWidth',2,'Color','yellow');
 % figure
 % imshow(RGB)
-toc
+%toc
 u=3;
 % viscircles(centro2, 5, 'EdgeColor','b');
 %-------------------------------------------------------------------------------------------------------------------------------------------------------
 %Cálculo de pendientes y trazado de rectas
 m1 = -(cy_der-cy_izq)/(cx_der-cy_izq);
 m2 = -1/m1;
-angulo = atan(m2);
+if m2 >0
+    angulo = atan(m2);
+else
+    angulo = atan(m2)+pi;
+end    
 coefs = 0:0.01:1.2;
 %I4=I;
 white = [255,255,255];
@@ -207,13 +209,19 @@ else
     disp('k')
 end
 %--------------------------------------------------------------------------------------------------------------------------------------------------------
-%Cálculo de puntos pertenecientes a la parábola descrita
+%Cálculo de puntos pertenecientes a la parábola descrita + 
 x_aju = cx_izq:1:cx_der;
 y_aju = zeros(1,length(x_aju));
 blue = [0,0,255];
+mascara = I;
+black = [0,0,0];
 
-for i=1:length(x_aju)
-    y_aju(i) = floor(A(1)*x_aju(i)^2+A(2)*x_aju(i)+A(3));    
+for i = 1:length(x_aju)
+    y_aju(i) = floor(A(1)*x_aju(i)^2+A(2)*x_aju(i)+A(3));
+    y_vector = 1:1:y_aju(i);
+    for k = 1:length(y_vector)
+        mascara(y_vector(k),x_aju(i),:) = black;
+    end    
     RGB7(y_aju(i),x_aju(i),:) = blue;       
 end 
 figure()
@@ -221,10 +229,12 @@ imshow(RGB7)
 titulo = strcat('Imagen Número',' ');
 titulo = strcat(titulo,num2str(iteration));
 title(titulo);
+%figure()
+%imshow(mascara)
 else
     display('Rectangulos se salen de la imagen')
 end
-
+toc
 end    
 
 
