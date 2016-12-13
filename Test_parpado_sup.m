@@ -7,12 +7,14 @@ carpeta = 'Iris_Segmentation';
 directions = direcciones(pc_folder, carpeta);
 
 
-for iteration=108:108
+for iteration=104:104
 rect = 0;
 tic
-resize = 0.5;
+resize = 0.2;
 cancer = iteration;
 I = lectura_2(directions, cancer, resize);
+figure
+imshow(I)
 I_original = lectura_2(directions, cancer, 1);
 
 I_iris = lectura_2(directions, cancer, 0.15);
@@ -40,7 +42,7 @@ H = floor(0.1*radio2);
 %-----------------------------------------------------------------------------------------------------------------------------------------------------
 %Iteración sobre ángulos desde -30 a 45 grados-> total de 75 grados.
 pause(5)
-delta = 1;
+delta = 5;
 angulosder = -20:delta:45;
 angulosizq = 135:delta:200;
 angulos = horzcat(angulosder,angulosizq);
@@ -99,8 +101,8 @@ for k = 1:length(angulos)
 end
 
 if rect==0
-%figure
-%imshow(I3)
+figure
+imshow(I3)
 %-----------------------------------------------------------------------------------------------------------------------------------------------------
 %Búsqueda de máximo de g y posiciones de los puntos c_izq y c_der.
 
@@ -163,7 +165,7 @@ y_v2 = y_v(1:i);
 RGB3 = insertShape(RGB2,'Line',[x_v2(1) y_v2(1) x_v2(end) y_v2(end) ],'LineWidth',2,'Color','yellow');
 % imshow(RGB3)
 RGB4 = insertShape(RGB3,'Line',[cx_izq cy_izq cx_der cy_der],'LineWidth',2,'Color','yellow');
-% imshow(RGB4)
+ imshow(RGB4)
 %--------------------------------------------------------------------------------------------------------------------------------------------------------
 %Búsqueda del tercer punto
 %Parte preliminar: intersectar pupila con recta anterior
@@ -213,6 +215,7 @@ end
 x_aju = cx_izq:1:cx_der;
 y_aju = zeros(1,length(x_aju));
 blue = [0,0,255];
+red = [255,0,0];
 mascara = I;
 black = [0,0,0];
 
@@ -222,7 +225,7 @@ for i = 1:length(x_aju)
     for k = 1:length(y_vector)
         mascara(y_vector(k),x_aju(i),:) = black;
     end    
-    RGB7(y_aju(i),x_aju(i),:) = blue;       
+    RGB7(y_aju(i),x_aju(i),:) = white;       
 end 
 figure()
 imshow(RGB7)
