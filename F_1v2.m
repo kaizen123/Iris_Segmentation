@@ -1,17 +1,18 @@
 main_folder = 'RGB Images';
-directions = direcciones('Nico', 'Iris_Segmentation');
+directions = direcciones('Koky', 'Iris_Segmentation');
 %Iteración sobre algunas imágenes de la base de datos.
 %Notar que si se descomenta pause al final del código este puede quedarse
 %pegado, por lo que lo recomendable es dejarlo comentado e iterar sobre un
 %número pequeño de imagenes (para no tener muchas figuras)
 
 
-for j=10:10
+for j=130:2:130
 %Reescalamiento de imagen
 %I_original = imread(direccion);
 I_original = lectura_2(directions, j, 1);
-resize_constant = 1;
+resize_constant = 0.2;
 I = imresize(I_original,resize_constant);
+%I = imread('test1.jpg');
 
 % 2)Nuevas imagenes a partir de la original + dimensiones
 gray = rgb2gray(I);
@@ -87,6 +88,29 @@ lista2=comparar(phase,inicio,fin,modo);
 %Compara imagen original y otras 8 a las cuales se les aplicò un umbral.
 figure
 splot(3,3,lista1) %se puede elegir entre lista 1 y 2
+%figure()
+%imshow(lista1{1})
+umb = umbral(lista1{1},30,1)
+%figure()
+%imshow(umb)
+mode = 'prewitt';
+e1_gray=edge(gray, mode, 'vertical',0.05);
+%figure
+subplot(1,3,1)
+imshow(gray)
+subplot(1,3,2)
+imshow(e1_gray)
+e1_gray=uint8(e1_gray);
+[mag2,phase2] = imgaborfilt(e1_gray,wavelength,orientation);
+mag2=ajustar(mag2);
+mag2=umbral(mag2,10,1);
+%figure
+subplot(1,3,3)
+imshow(mag2)
+
+
+% figure
+% splot(3,3,lista2)
 
 %6)Aplicación de umbrales de intensidad para reflejos->modo 4(y conjuntos de pestañas?->modo 5)
 %     inicio1=0;
