@@ -2,9 +2,11 @@ pc_folder = 'Nico';
 carpeta = 'Iris_Segmentation';
 directions = direcciones('Nico', 'Iris_Segmentation');
 
-for j=256:256
+c = 0;
+for j=100:110
     I_original = lectura_2(directions, j, 1);
-
+    
+    
     % Resizeando (vest verbo) para detección óptima
     resize_constant = 0.15; 
     I = imresize(I_original,resize_constant); 
@@ -14,6 +16,7 @@ for j=256:256
     equalizada = histeq(gray);
     binaria = imbinarize(equalizada);
     J=edge(binaria, 'Canny', 0.05);
+    
 
     % Radios mínimos y maximos para buscar circulos, encontrados a mano
     Rmin = floor(60*resize_constant/0.2);
@@ -24,25 +27,30 @@ for j=256:256
     if ~isempty(centros);
         [iris_center, iris_radio] = compare_white_r (binaria, centros, radios);
 
-        figure      %% BlOQUE PARA EVALUAR DETECCION DE IRIS
-        imshow(I)   %% I -> Imagen RGB, gray, equailizada, binaria, J           
-        viscircles(centros, radios, 'EdgeColor','b');
-        viscircles(iris_center, iris_radio,'EdgeColor','r');
+%         figure      %% BlOQUE PARA EVALUAR DETECCION DE IRIS
+%         imshow(I)   %% I -> Imagen RGB, gray, equailizada, binaria, J           
+%         viscircles(centros, radios, 'EdgeColor','b');
+%         viscircles(iris_center, iris_radio,'EdgeColor','r');
 
         % Reescalamiento para extraer iris con imagen de la resolución original
         real_iris_center = iris_center / resize_constant;
         real_iris_radio = iris_radio / resize_constant;
+        
+        c(j) = real_iris_radio; 
         % Mostrar Iris en imagen original
         %figure, imshow(I_original)
         %viscircles(real_iris_center, real_iris_radio, 'EdgeColor','b');
 
+        no_eyelid = parpado(I_original);
         % Mostrar imagen cuadrada solo con el iris circunscrito
-        [iris, iris_square] = just_iris( I_original, real_iris_center, real_iris_radio);
+        [iris, iris_square] = just_iris( no_eyelid, real_iris_center, real_iris_radio);
+        %figure(), imhist(rgb2gray(iris_square));
         %figure, imshow(iris_square),
 
         % Búsqueda de pupila 
         [centro_pupila, radio_pupila] = finding_retina(iris_square, real_iris_radio);
-        pupila_real_center = centro_real(real_iris_center, real_iris_radio, centro_pupila);
+%         c(j) = radio_pupila; 
+        %pupila_real_center = centro_real(real_iris_center, real_iris_radio, centro_pupila);
         
 %         for i=1:1
 %             wavelength = 2+((i-1)*0.25);
@@ -62,7 +70,10 @@ for j=256:256
         
 
         % Rellenado de la imagen
-        %no_reflex = sin_reflejos(iris_square, 0.5, 7);
+        no_reflex = sin_reflejos(iris_square, 0.5, 5);
+        solo_iris = just_iris_2(iris_square, centro_pupila, radio_pupila);
+        
+        figure(), imshow(solo_iris)
         
         % Aplicación de filtros medianos
 %         no_reflex_original = no_reflex;       
@@ -86,5 +97,6 @@ for j=256:256
         
     end
 end
+
 
 

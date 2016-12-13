@@ -11,19 +11,19 @@ closeBW = imclose(BW2,SE);              %% Mezcla de blobs cercanos
 out = fill_in(closeBW, reflex);
 
 %%%% IMAGENES REAL, DILATACION, MEZCLA
-figure()
-subplot(1,3,1)        
-imshow(reflex)
-subplot(1,3,2)
-imshow(BW2)
-subplot(1,3,3)
-imshow(closeBW)
-
-%%%% IMAGEN REAL, IMAGEN SALIDA
-figure()
-subplot(1,2,1)
-imshow(reflex)
-subplot(1,2,2)
-imshow(out)
+% figure()
+% subplot(1,3,1)        
+% imshow(reflejos_mask)
+% subplot(1,3,2)
+% imshow(BW2)
+% subplot(1,3,3)
+% imshow(closeBW)
+% 
+% %%%% IMAGEN REAL, IMAGEN SALIDA
+% figure()
+% subplot(1,2,1)
+% imshow(reflex)
+% subplot(1,2,2)
+% imshow(out)
 
 end

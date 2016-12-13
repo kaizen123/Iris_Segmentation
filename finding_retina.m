@@ -1,10 +1,13 @@
 function [centro_real, radio_real] = finding_retina(imagen, iris_radio)
     resize_constant = 0.3;
     I = imresize(imagen,resize_constant);
-    
+    %figure(), imshow(I);
     % Preprocesamiento
-    %gray = rgb2gray(I); 
+    gray = rgb2gray(I);
+    %figure(), imshow(gray);
+    
     gray = I(:,:,1);
+    %figure(), imshow(gray);
     %complemento = imcomplement(I);
     %gray = rgb2gray(complemento);
     %equalizada = histeq(gray);
@@ -18,7 +21,7 @@ function [centro_real, radio_real] = finding_retina(imagen, iris_radio)
     
     new_radio = resize_constant*iris_radio;
     Rmin = floor(0.3*new_radio);
-    Rmax = floor(0.7*new_radio);
+    Rmax = floor(0.6*new_radio);
     [centros_pupila, radios_pupila] = imfindcircles(J,[Rmin Rmax],'ObjectPolarity','dark', 'Sensitivity', 0.956);
     %%%%%%%%%%%%%%%%% BRIGHT O DARK %%%%
     
@@ -27,16 +30,16 @@ function [centro_real, radio_real] = finding_retina(imagen, iris_radio)
         [centro_out , radio_out] = best_pupila(rows, cols, centros_pupila, radios_pupila);
         
         % Bloque para evaluar funcionamiento del detector de pupilas
-        %figure
-        %imshow(gray)
-        %viscircles(centros_pupila, radios_pupila, 'EdgeColor','g');
-        %viscircles(centro_out, radio_out, 'EdgeColor','r');
+%         figure
+%         imshow(gray)
+%         viscircles(centros_pupila, radios_pupila, 'EdgeColor','g');
+%         viscircles(centro_out, radio_out, 'EdgeColor','r');
         
         % Bloque para mostrar resultado definitivo
         centro_real = centro_out/resize_constant;
         radio_real = radio_out/resize_constant;
         solo_iris = just_iris_2(imagen, centro_real, radio_real);
-        figure 
+        %figure 
         %imshow(solo_iris)
         %viscircles(centro_real, radio_real, 'EdgeColor','r');
        

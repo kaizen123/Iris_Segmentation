@@ -1,10 +1,11 @@
 function y = parpado(imagen)
 resize_constant = 0.2;
 I = imresize(imagen,resize_constant);
-I_iris = imresize(I_original,0.15);;
+I_iris = imresize(imagen,0.15);
 row=length(I(:,1,1));
 col=length(I(1,:,1));
-
+resize = 0.2;
+rect = 0;
 %-----------------------------------------------------------------------------------------------------------------------------------------------------
 %Obtención de datos sobre posición y radio del iris detectado
 [centro, radio] = datos_iris(I_iris,0.15);
@@ -155,7 +156,7 @@ if rect==0
     %--------------------------------------------------------------------------------------------------------------------------------------------------------
     %Búsqueda del tercer punto
     %Parte preliminar: intersectar pupila con recta anterior
-    [iris, iris_square] = just_iris( I_original, centro, radio);
+    [iris, iris_square] = just_iris( imagen, centro, radio);
     %figure, imshow(iris_square),
     [centro_pupila, radio_pupila] = finding_retina(iris_square, radio);
     pupila_real_center = centro_real(centro, radio, centro_pupila);
@@ -213,14 +214,14 @@ if rect==0
         end
         RGB7(y_aju(i),x_aju(i),:) = white;
     end
-    figure()
-    imshow(RGB7)
-    titulo = strcat('Imagen Número',' ');
-    titulo = strcat(titulo,num2str(iteration));
-    title(titulo);
+%     figure()
+%     imshow(RGB7)
+%     titulo = strcat('Imagen Número',' ');
+%     titulo = strcat(titulo,num2str(iteration));
+%     title(titulo);
     %figure()
     %imshow(mascara)
-    mascara2=imresize(mascara,5);    
+    mascara2=imresize(mascara,1/resize);    
 else
     display('Rectangulos se salen de la imagen')
 end
